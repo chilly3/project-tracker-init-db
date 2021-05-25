@@ -12,10 +12,22 @@ const user_data = waka_data.user;
 const daily_data = waka_data.day;
 
 const App = () => {
+  const [users, setUsers] = useState('');
+
+
+  useEffect(() => {
+    axios.get(`/db/user/list`)
+    .then(({ data } = res) => {
+      setUsers(data[0])
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }, []);
 
   return (
     <div>
-      <h1 className="title">Project Tracker: Initialize Database</h1>
+      <h1 className="title">Project Tracker: Database Initializer</h1>
       <nav className="navbar navbar-light">
           <ul className="nav navbar-nav">
             <li className="appnav">
@@ -33,7 +45,7 @@ const App = () => {
         <Switch>
           <Route exact path="/"><Home /></Route>
           <Route path="/user"><User /></Route>
-          <Route path="/daily"><Daily /></Route>
+          <Route path="/daily"><Daily data={users}/></Route>
           <Route path="/:id">
             <p>This text will render for any route other than those defined above</p>
           </Route>

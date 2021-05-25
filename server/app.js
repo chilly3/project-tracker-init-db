@@ -19,6 +19,22 @@ const daily_routes = require('./routes/daily');
 app.use('/db/user', user_routes);
 app.use('/db/daily', daily_routes);
 
+const mongoDB = require('../config/mongo.config');
+mongoose.connect(mongoDB, {
+  useNewUrlParser: true, 
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+})
+
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'MongoDB connection error'));
+db.once('open', () => {
+  console.log('MongoDB database connection established successfully');
+});
+
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client/dist'));
 
