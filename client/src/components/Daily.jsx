@@ -109,8 +109,9 @@ const Daily = ({ data }) => {
     });
     return {
       user: data,
-      daily_id: date + user._id,
-      grand_total: grand_total,
+      daily_id: date + data.user_id,
+      date: date,
+      grand_total: grand_total.digital,
       editors: editor,
       languages: language,
       machines: machine,
@@ -119,9 +120,19 @@ const Daily = ({ data }) => {
     }
   });
 
-  // const linkList = daily_breakdown.map((day) => {
-  //   const id = 
-  // })
+  const sendDaily_info = () => {
+    
+    axios.post(`/db/daily/add`, {
+      days: daily_breakdown
+    })
+    .then(res => {
+      console.log(`${daily_breakdown.length} daily records added to database`)
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+
   console.log(daily_breakdown[131])
   return (
     <div className="content">
@@ -135,6 +146,9 @@ const Daily = ({ data }) => {
             <p>Select Day</p>
           </Route>
         </div>
+        <p>{daily_breakdown.length} entries for {data.email}</p>
+        <button className="send-daily-info" onClick={sendDaily_info}>Submit Daily Records</button>
+
       </div>
     </div>
   );

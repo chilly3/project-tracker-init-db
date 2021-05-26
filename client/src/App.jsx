@@ -13,9 +13,18 @@ const daily_data = waka_data.day;
 
 const App = () => {
   const [users, setUsers] = useState('');
+  const [dailies, setDailies] = useState('');
 
 
   useEffect(() => {
+    Promise.all([getUser_list(), getDaily_list()])
+    .then((results) => {})
+    .catch(err => {
+      console.log(err);
+    });
+  }, []);
+
+  const getUser_list = () => {
     axios.get(`/db/user/list`)
     .then(({ data } = res) => {
       setUsers(data[0])
@@ -23,8 +32,19 @@ const App = () => {
     .catch(err => {
       console.log(err);
     });
-  }, []);
+  }
 
+  const getDaily_list = () => {
+    axios.get(`/db/daily/list`)
+    .then(({ data } = res) => {
+      setDailies(data)
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+
+  console.log(dailies);
   return (
     <div>
       <h1 className="title">Project Tracker: Database Initializer</h1>
@@ -45,7 +65,7 @@ const App = () => {
         <Switch>
           <Route exact path="/"><Home /></Route>
           <Route path="/user"><User /></Route>
-          <Route path="/daily"><Daily data={users}/></Route>
+          <Route path="/daily"><Daily data={daily}/></Route>
           <Route path="/:id">
             <p>This text will render for any route other than those defined above</p>
           </Route>
