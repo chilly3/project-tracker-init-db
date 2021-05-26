@@ -44,7 +44,6 @@ const App = () => {
     });
   }
 
-  console.log(dailies);
   return (
     <div>
       <h1 className="title">Project Tracker: Database Initializer</h1>
@@ -65,7 +64,7 @@ const App = () => {
         <Switch>
           <Route exact path="/"><Home /></Route>
           <Route path="/user"><User /></Route>
-          <Route path="/daily"><Daily data={daily}/></Route>
+          <Route path="/daily"><Daily data={ {dailies: dailies, users: users} }/></Route>
           <Route path="/:id">
             <p>This text will render for any route other than those defined above</p>
           </Route>

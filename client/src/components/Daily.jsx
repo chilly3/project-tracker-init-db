@@ -12,11 +12,7 @@ const Daily = ({ data }) => {
 
   const { url, path } = useRouteMatch();
   const [user, setUser] = useState('');
-  const userid = data._id;
-  console.log(url);
-
-  console.log(user);
-
+  const userid = data.users._id;
 
   useEffect(() => {
     axios.get(`/db/user/${userid}`)
@@ -133,7 +129,6 @@ const Daily = ({ data }) => {
     });
   }
 
-  console.log(daily_breakdown[131])
   return (
     <div className="content">
       <div>

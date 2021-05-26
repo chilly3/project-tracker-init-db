@@ -19,7 +19,7 @@ const daily_routes = require('./routes/daily');
 app.use('/db/user', user_routes);
 app.use('/db/daily', daily_routes);
 
-const mongoDB = require('../config/mongo.config');
+const mongoDB = require('../config/mongo_atlas.config');
 mongoose.connect(mongoDB, {
   useNewUrlParser: true, 
   useUnifiedTopology: true,
