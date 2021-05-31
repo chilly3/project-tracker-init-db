@@ -3,10 +3,11 @@ const axios = require('axios');
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 
 let wakatime_api = require('../config/waka.config');
 let app = express();
-let port = 8000;
+let port = 8080;
 
 //Models
 const User = require('./models/user');
@@ -38,6 +39,14 @@ db.once('open', () => {
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit:50000 }))
 app.use(express.static(__dirname + '/../client/dist'));
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/../client/dist/index.html'), (err) => {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);

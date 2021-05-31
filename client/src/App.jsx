@@ -9,7 +9,7 @@ import Daily from './components/Daily.jsx';
 
 
 const user_data = waka_data.user;
-const daily_data = waka_data.day;
+const daily_data = waka_data.days;
 
 const App = () => {
   const [users, setUsers] = useState('');
@@ -43,7 +43,7 @@ const App = () => {
       console.log(err);
     });
   }
-
+  console.log(daily_data);
   return (
     <div>
       <h1 className="title">Project Tracker: Database Initializer</h1>

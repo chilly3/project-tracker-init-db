@@ -12,7 +12,7 @@ router.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
 
 ///DAILY DATABASE ROUTES///
 
-//POST request add dailys
+//POST request add dailies
 router.post('/add', (req, res, next) => {
   const postDays = req.body.days;
 
@@ -24,6 +24,12 @@ router.post('/add', (req, res, next) => {
       console.log(`Multiple documents inserted into Daily collection`)
     }
   })
+});
+
+//GET request for all dailys for a given user
+router.get('/list/:user', async(req, res) => {
+  const user_dailies = await Daily.find({ user: req.params.user });
+  return res.status(200).send(user_dailies);
 });
 
 //GET request for list of all dailys

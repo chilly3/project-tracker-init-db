@@ -12,10 +12,11 @@ const Daily = ({ data }) => {
 
   const { url, path } = useRouteMatch();
   const [user, setUser] = useState('');
-  const userid = data.users._id;
-
+  const dbuserid = data.users._id;
+  const wakaid = data.users.user_id;
+  console.log(data.users)
   useEffect(() => {
-    axios.get(`/db/user/${userid}`)
+    axios.get(`/db/user/${dbuserid}`)
     .then(({ data } = res) => {
       setUser(data)
     })
@@ -25,8 +26,19 @@ const Daily = ({ data }) => {
   }, []);
 
   const daily_breakdown = daily_data.map((day) => {
-    const { date, grand_total, editors, languages, machines, operating_systems, projects } = day;
+    const { date, grand_total, dependencies, editors, languages, machines, operating_systems, projects } = day;
     
+    const dependency = dependencies.map((dependency) => {
+      const { name, digital, percent, text} = dependency;
+
+      return {
+        name: name,
+        digital: digital,
+        percent: percent,
+        text: text
+      }
+    });
+
     const editor = editors.map((editor) => {
       const { name, digital, percent, text } = editor;
       
@@ -104,9 +116,10 @@ const Daily = ({ data }) => {
       }
     });
     return {
-      user: data,
-      daily_id: date + data.user_id,
+      user: dbuserid,
+      waka_id: wakaid,
       date: date,
+      dependencies: dependency,
       grand_total: grand_total.digital,
       editors: editor,
       languages: language,

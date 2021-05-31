@@ -4,9 +4,12 @@ const Schema = mongoose.Schema;
 
 const DailySchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  daily_id: { type: String, required: true, unique: true },
-  date: { type: Date, required: true },
+  waka_id: { type: String, required: true },
+  date: { type: String, required: true },
   grand_total: { type: String },
+  dependencies: [{ 
+    name: { type: String }, digital: { type: String }, percent: { type: String }, text: { type: String } 
+  }],
   editors: [{ 
     name: { type: String }, digital: { type: String }, percent: { type: String }, text: { type: String } 
   }],
